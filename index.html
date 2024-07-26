@@ -11,7 +11,7 @@
 
             function readTextFile() { 
                 fetch("items.txt")
-                    .then(r=>r.text())
+                    .then(r => r.text())
                     .then(text => {
                         const lines = text.split("\n");
                         document.getElementById("output").textContent = lines.join("\n");
@@ -21,8 +21,6 @@
                     })
             }
 
-
-            readTextFile();
 
             /*
             var items_mapped;
@@ -205,7 +203,7 @@
             }*/
         </script>
 
-        <button onclick="readTextFile"></button>
+        <button onclick="readTextFile()"></button>
 
         <p id="record">hehe</p>
         <p id="testing">hehe</p>
