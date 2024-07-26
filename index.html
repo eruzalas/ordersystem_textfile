@@ -11,15 +11,18 @@
 
             function readTextFile() { 
                 fetch("items.txt")
-                .then(r=>r.text())
-                .then(text => {
-                    lines = text.split("\n")
-                })
-                document.getElementById("output").textContent = lines
+                    .then(r=>r.text())
+                    .then(text => {
+                        const lines = text.split("\n");
+                        document.getElementById("output").textContent = lines.join("\n");
+                    })
+                    .catch(error => {
+                        console.error('Error fetching the text file:', error);
+                    })
             }
 
 
-
+            readTextFile();
 
             /*
             var items_mapped;
