@@ -8,17 +8,84 @@
     <body>
         <p id="output">testing</p>
         <script type="text/javascript">
+            //document.getElementById("output").innerHTML = lines.join("<br>");
 
             function readTextFile() { 
                 fetch("items.txt")
                     .then(r => r.text())
                     .then(text => {
                         const lines = text.split("\n");
-                        document.getElementById("output").innerHTML = lines.join("<br>");
+                        const items = [];
+                        lines.forEach(line => {
+                            const item = line.split(":");
+                            items.push(item);
+                        })
+                        createItemTable(items)
                     })
                     .catch(error => {
                         console.error('Error fetching the text file:', error);
                     })
+            }
+
+            function createItemTable(items) {
+                let output = "<div class =\"items\">";
+                    output += "<fieldset>";
+                    output += "<table>\n";
+                    output += "<tr>\n "
+                        + "<th>ITEMS</th>\n "
+                        + "<th class=\"add_th\">COST PER PIECE</th>\n "
+                        + "<th class=\"add_th\">AMOUNT REQUIRED</th>\n "
+                        + "<th class=\"add_th\">TOTAL COST</th>\n "
+                        + "</tr>\n ";
+                
+                let index = 0;
+                let tdCount = 0;
+                const count = items.length;
+
+                if (items[index]) {
+                    while (index < count) {
+                        if (items[index] !== "") {
+                            output += "<tr>\n";
+                            
+                            let altIterate = 0;
+                            const innerCount = items[0].length + 1;
+                            const costId = "total_costs" + tdCount;
+                            while (altIterate < innerCount) {
+                                let found = false;
+                                if (altIterate === 0 && items[index][2] !== "HEADING") {
+                                    output += "<td class=\"item_name\">" + items[index][altIterate].trim() + "</td>\n ";
+                                } else if (altIterate === 1 && items[index][2] !== "HEADING") {
+                                    output += "<td>&#36;" + items[index][altIterate].trim() + "</td>\n ";
+                                } else if (altIterate === 2 && items[index][2] !== "HEADING") {
+                                    output += "<td><input type=\"number\" name=\"amount_arr[]\" value=\"\" oninput=\"calculateTotal();\"></td>";
+                                } else if (altIterate === 3 && items[index][2] !== "HEADING") {
+                                    output += "<td id=\"" + costId + "\"></td>\n ";
+                                    found = true;
+                                } else if (items[index][2] === "HEADING") {
+                                    if (altIterate === 0) {
+                                        output += "<td class=\"item_heading\" colspan=\"4\">" + items[index][altIterate].trim() + "</td>\n ";
+                                    }
+                                }
+
+                                if (found === true) {
+                                    tdCount += 1;
+                                }
+                                altIterate += 1;
+                            }
+                        }
+                        index += 1;
+                    }
+                    output += "</tr>";
+                }
+                output += "<tr>"
+                    + "<td colspan=\"3\" class=\"total_heading\">Total cost:</td>"
+                    + "<td id=\"total_cost\"></td>"
+                    + "</tr>";
+                output += "</table>\n ";
+                output += "</fieldset>";
+                output += "</div>";
+
+                document.body.innerHTML += output; // Assuming you want to append to the body
             }
 
 
