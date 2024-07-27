@@ -10,6 +10,8 @@
         <script type="text/javascript">
             //document.getElementById("output").innerHTML = lines.join("<br>");
 
+            let item_list = [];
+
             function readTextFile() { 
                 fetch("items.txt")
                     .then(r => r.text())
@@ -20,14 +22,16 @@
                             const item = line.split(":");
                             items.push(item);
                         })
-                        createItemTable(items);
+                        item_list = items;
+                        createItemTable();
                     })
                     .catch(error => {
                         console.error('Error fetching the text file:', error);
                     })
             }
 
-            function createItemTable(items) {
+            function createItemTable() {
+                let items = item_list;
                 let output = "<div class =\"items\">";
                     output += "<fieldset>";
                     output += "<table>\n";
@@ -57,7 +61,7 @@
                                 } else if (altIterate === 1 && items[index][2] !== "HEADING") {
                                     output += "<td>&#36;" + items[index][altIterate].trim() + "</td>\n ";
                                 } else if (altIterate === 2 && items[index][2] !== "HEADING") {
-                                    output += "<td><input type=\"number\" name=\"amount_arr[]\" value=\"\" oninput=\"calculateTotal(" & items & ");\"></td>";
+                                    output += "<td><input type=\"number\" name=\"amount_arr[]\" value=\"\" oninput=\"calculateTotal();\"></td>";
                                 } else if (altIterate === 3 && items[index][2] !== "HEADING") {
                                     output += "<td id=\"" + costId + "\"></td>\n ";
                                     found = true;
@@ -90,6 +94,7 @@
 
 
             function calculate_total(items) {
+                let items = item_list;
                 //document.getElementById('testing').innerHTML = count;
                 //disable_submit();
                 var input_read = document.getElementsByName('amount_arr[]');
