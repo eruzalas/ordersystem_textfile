@@ -20,7 +20,7 @@
                             const item = line.split(":");
                             items.push(item);
                         })
-                        createItemTable(items)
+                        createItemTable(items);
                     })
                     .catch(error => {
                         console.error('Error fetching the text file:', error);
@@ -57,7 +57,7 @@
                                 } else if (altIterate === 1 && items[index][2] !== "HEADING") {
                                     output += "<td>&#36;" + items[index][altIterate].trim() + "</td>\n ";
                                 } else if (altIterate === 2 && items[index][2] !== "HEADING") {
-                                    output += "<td><input type=\"number\" name=\"amount_arr[]\" value=\"\" oninput=\"calculateTotal(items);\"></td>";
+                                    output += "<td><input type=\"number\" name=\"amount_arr[]\" value=\"\" oninput=\"calculateTotal(" & items & ");\"></td>";
                                 } else if (altIterate === 3 && items[index][2] !== "HEADING") {
                                     output += "<td id=\"" + costId + "\"></td>\n ";
                                     found = true;
@@ -110,7 +110,7 @@
                     index_position_discovery.push(i);
                     i += 1;
                 }
-                
+
                 var indiv_cost = 0;
 
                 var j = 0;
@@ -212,6 +212,9 @@
                 email_arr = final_arr;
                 updating_arr = items;
             }
+
+            
+            readTextFile();
 
 
             /*
@@ -394,8 +397,6 @@
                 document.getElementById('one').innerHTML = order_item;
             }*/
         </script>
-
-        <button onclick="readTextFile()"></button>
 
         <p id="record">hehe</p>
         <p id="testing">hehe</p>
