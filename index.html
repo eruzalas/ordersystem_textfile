@@ -62,7 +62,7 @@
                                 } else if (altIterate === 1 && items[index][2] !== "HEADING") {
                                     output += "<td>&#36;" + items[index][altIterate].trim() + "</td>\n ";
                                 } else if (altIterate === 2 && items[index][2] !== "HEADING") {
-                                    output += "<td><input type=\"number\" name=\"amount_arr[]\" value=\"\" oninput=\"calculateTotal();\"></td>";
+                                    output += "<td><input type=\"number\" name=\"amount_arr[]\" value=\"\" oninput=\"calculate_total();\"></td>";
                                 } else if (altIterate === 3 && items[index][2] !== "HEADING") {
                                     output += "<td id=\"" + costId + "\"></td>\n ";
                                     found = true;
